@@ -1,0 +1,37 @@
+jQuery multiSelect
+
+Version 1.0.2 beta
+
+Cory S.N. LaViska
+A Beautiful Site (http://abeautifulsite.net/)
+10 May 2009
+
+Visit http://abeautifulsite.net/notebook.php?article=62 for more information
+
+Usage: $('#control_id').multiSelect( options, callback )
+
+Options:  selectAll          - whether or not to display the Select All option; true/false, default = true
+          selectAllText      - text to display for selecting/unselecting all options simultaneously
+          noneSelected       - text to display when there are no selected items in the list
+          oneOrMoreSelected  - text to display when there are one or more selected items in the list
+                               (note: you can use % as a placeholder for the number of items selected).
+                               Use * to show a comma separated list of all selected; default = '% selected'
+          focusTimeout       - time until the expanded options disappear after losing focus
+                               (note: you can specify false, so there won't be any timeout)
+
+Dependencies:  jQuery 1.2.6 or higher (http://jquery.com/)
+
+Change Log:
+
+             1.0.1   - Updated to work with jQuery 1.2.6+ (no longer requires the dimensions plugin)
+                             - Changed $(this).offset() to $(this).position(), per James' and Jono's suggestions
+
+             1.0.2   - Fixed issue where dropdown doesn't scroll up/down with keyboard shortcuts
+                             - Changed '$' in setTimeout to use 'jQuery' to support jQuery.noConflict
+                             - Renamed from jqueryMultiSelect.* to jquery.multiSelect.* per the standard recommended at
+                               http://docs.jquery.com/Plugins/Authoring (does not affect API methods)
+
+Licensing & Terms of Use
+
+This plugin is dual-licensed under the GNU General Public License and the MIT License and
+is copyright 2008 A Beautiful Site, LLC.

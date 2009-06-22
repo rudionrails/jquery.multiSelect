@@ -17,6 +17,8 @@
 //           oneOrMoreSelected  - text to display when there are one or more selected items in the list
 //                                (note: you can use % as a placeholder for the number of items selected).
 //                                Use * to show a comma separated list of all selected; default = '% selected'
+//           focusTimeout       - time until the expanded options disappear after losing focus
+//                                (note: you can specify false, so there won't be any timeout)
 //
 // Dependencies:  jQuery 1.2.6 or higher (http://jquery.com/)
 //
@@ -46,7 +48,8 @@ if(jQuery) (function($){
 			if( o.selectAllText == undefined ) o.selectAllText = "Select All";
 			if( o.noneSelected == undefined ) o.noneSelected = 'Select options';
 			if( o.oneOrMoreSelected == undefined ) o.oneOrMoreSelected = '% selected';
-			
+			if( o.focusTimeout == undefined ) o.focusTimeout = 250;
+      
 			// Initialize each multiSelect
 			$(this).each( function() {
 				var select = $(this);
@@ -73,7 +76,7 @@ if(jQuery) (function($){
 					if( $(this).hasClass('active') ) {
 						$(this).multiSelectOptionsHide();
 					} else {
-						$(this).multiSelectOptionsShow();
+						$(this).multiSelectOptionsShow( o );
 					}
 					return false;
 				}).focus( function() {
@@ -82,6 +85,13 @@ if(jQuery) (function($){
 				}).blur( function() {
 					// So it can be styled with CSS
 					$(this).removeClass('focus');
+				});
+        
+        // add the hover to the multiSelectOptions
+        $(select).next('.multiSelect').next('.multiSelectOptions').mouseover( function() {
+          $(this).addClass('hover');
+        }).mouseout( function() {
+					$(this).removeClass('hover');
 				});
 				
 				// Determine if Select All should be checked initially
@@ -229,6 +239,13 @@ if(jQuery) (function($){
 				// Eliminate the original form element
 				$(select).remove();
 			});
+
+      // do the mousedown thing on the DOM
+      $(document).unbind( "mousedown.multiSelect" ).bind( "mousedown.multiSelect", function() {
+        if( !$('.multiSelect').hasClass( "hover" ) && !$('.multiSelect').next( ".multiSelectOptions" ).hasClass( "hover" ) ) {
+          $('.multiSelect').multiSelectOptionsHide();
+        }
+			});
 			
 		},
 		
@@ -238,7 +255,7 @@ if(jQuery) (function($){
 		},
 		
 		// Show the dropdown
-		multiSelectOptionsShow: function() {
+		multiSelectOptionsShow: function( o ) {
 			// Hide any open option boxes
 			$('.multiSelect').multiSelectOptionsHide();
 			$(this).next('.multiSelectOptions').find('LABEL').removeClass('hover');
@@ -255,7 +272,9 @@ if(jQuery) (function($){
 			$(this).next('.multiSelectOptions').hover( function() {
 				clearTimeout(timer);
 			}, function() {
-				timer = setTimeout('jQuery(multiSelectCurrent).multiSelectOptionsHide(); $(multiSelectCurrent).unbind("hover");', 250);
+        if( o.focusTimeout != false ) {
+          timer = setTimeout('jQuery(multiSelectCurrent).multiSelectOptionsHide(); $(multiSelectCurrent).unbind("hover");', o.focusTimeout);
+        }
 			});
 			
 		},

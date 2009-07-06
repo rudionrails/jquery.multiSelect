@@ -16,8 +16,11 @@ Options:  selectAll          - whether or not to display the Select All option; 
           oneOrMoreSelected  - text to display when there are one or more selected items in the list
                                (note: you can use % as a placeholder for the number of items selected).
                                Use * to show a comma separated list of all selected; default = '% selected'
-          focusTimeout       - time until the expanded options disappear after losing focus
-                               (note: you can specify false, so there won't be any timeout)
+          focusTimeout       - time until the expanded options disappear after losing focus;
+                               false will define that there is no timeout at all and the box will not disappear
+                               unless you click outside; default = 250
+          showConfirmation   - lets you define whether or not to display a confirmation link
+                               below the select options; 'OK', 'Close', default = false
 
 Dependencies:  jQuery 1.2.6 or higher (http://jquery.com/)
 
@@ -35,3 +38,4 @@ Licensing & Terms of Use
 
 This plugin is dual-licensed under the GNU General Public License and the MIT License and
 is copyright 2008 A Beautiful Site, LLC.
+
